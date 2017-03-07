@@ -30,12 +30,15 @@ train$predict <- as.factor(train$predict)
 
 train2 <- train[,2:10]
 
+#Applying Naive Bayes Algorithm
+
 naiv <- naiveBayes(predict~.,data = train)
 pred_naiv <- predict(naiv, newdata = test, type = "raw")
 na_da <- as.data.frame(pred_naiv)
 
-library(randomForest)
+#Applying Random Forest
 
+library(randomForest)
 randclas = randomForest(predict ~., data = train2)
 pred <- predict(randclas, newdata = test, type = "prob")[,2]
 #OUTPUT 
@@ -43,7 +46,11 @@ out <- data.frame(ID = test$ID, Prediction = pred)
 out$Prediction[out$Prediction >= 0.1] = 1
 out$Prediction[out$Prediction < 0.1] = 0
 
+#Applying K-Nearest Neighbor
+
 knn_clas = knn3(predict~., data = train2)
 predclas = predict(knn_clas, newdata = test)
+
+#Output File
 write.csv(out, "output1.csv", row.names = F)
 
