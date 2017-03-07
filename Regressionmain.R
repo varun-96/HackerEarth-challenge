@@ -20,3 +20,17 @@ pred <- predict(lin_reg, newdata = test)
 
 new <- subset(train, select = -c(V20,V21,V22,V14,V30,V35,V43,V36,V37,V38,V39,V55,V71,V72,V73))
 new <- subset(new, select = -c(V1))
+
+library(rpart)
+library(rpart.plot)
+library(caret)
+library(e1071)
+
+fitControl = trainControl(method = "CV", number = 10)
+CartGrid = expand.grid(.cp = (1:50)*0.01)
+
+train(V76~.,data = new,method = "rpart",trControl = fitControl, tuneGrid = CartGrid)
+treeCV = rpart(V76~.,method = "anova", data = new,control = rpart.control(cp = 0.01))
+
+#Decision Tree
+prp(treeCV)
