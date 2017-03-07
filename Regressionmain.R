@@ -19,5 +19,4 @@ lin_reg <- lm(V76 ~.,data = train)
 pred <- predict(lin_reg, newdata = test)
 
 new <- subset(train, select = -c(V20,V21,V22,V14,V30,V35,V43,V36,V37,V38,V39,V55,V71,V72,V73))
-
 new <- subset(new, select = -c(V1))
